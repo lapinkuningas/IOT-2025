@@ -97,9 +97,8 @@ while True:
     else:
         moisture_percent = (dry_soil - raw_value_soil) / (dry_soil - wet_soil) * 100
     
-    moisture_str = moisture_percent
+    moisture_str = f"{moisture_percent:.0f}"
     if moisture_percent < 30:
-        moisture_str = "SOIL IS TOO DRY!"
         if not email_alert_sent:
             smtp.write(sender_name + subject + "\n")
             smtp.write("The soil is too dry, water it to sustain the life of your plant!")
@@ -107,14 +106,10 @@ while True:
             print("[INFO] Email alert sent!")
             email_alert_sent = True
     else:
-        moisture_str = f"{moisture_percent:.0f}"
         email_alert_sent = False
         
     temperature = bmp.temperature
-    if temperature > 27:
-        temp_str = "TEMPERATURE IS TOO HIGH!"
-    else:
-        temp_str = f"{temperature:.1f}"
+    temp_str = f"{temperature:.1f}"
     
     pressure = bmp.pressure
     pressure_kpa = pressure / 1000
