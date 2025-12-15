@@ -46,7 +46,7 @@ context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT) # TLS_CLIENT = connect as clie
 context.verify_mode = ssl.CERT_NONE # CERT_NONE = not verify server/broker cert - CERT_REQUIRED: verify
 
 # mqtt client connect
-client = MQTTClient(client_id=b'jaakko_picow', server="cf285fe28f4b4589855b6394ae136dfb.s1.eu.hivemq.cloud", port=8883,
+client = MQTTClient(client_id=b'jaakko_picow', server="youruniqueservername.s1.eu.hivemq.cloud", port=8883,
                     user="IOT-Jaakko", password="********", ssl=context)
 
 client.connect()
