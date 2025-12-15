@@ -8,7 +8,6 @@ from umqtt.simple import MQTTClient
 import ssl
 import umail
 
-
 # wifi setup for pico w
 ssid = "PUT YOUR WIFI-NAME HERE"
 password = "AND THE PASSWORD FOR IT"
@@ -20,7 +19,6 @@ sender_password = "Generate 'App Password' in Google Account -settings"
 receiver = "who@gmail.com"
 subject = "Your plant needs water.."
 email_alert_sent = False
-
 
 # connect to wifi
 wlan = network.WLAN(network.STA_IF)
@@ -53,15 +51,18 @@ client = MQTTClient(client_id=b'jaakko_picow', server="cf285fe28f4b4589855b6394a
 
 client.connect()
 
+# setting email alerts
 smtp = umail.SMTP('smtp.gmail.com', 465, ssl=True)
 smtp.login(sender, sender_password)
 smtp.to(receiver)
+
 # define I2C, BMP, led and ADC
 i2c = machine.I2C(id=0, sda=Pin(20), scl=Pin(21)) # id=channel
 bmp = BMP280(i2c)
 led_blue = Pin(15, Pin.OUT)
 moisture = ADC(Pin(28))
 
+# when message is received on Pico W
 def subscribe_callback(topic, msg):
     topic_str = topic.decode()
     msg_str = msg.decode()
@@ -73,6 +74,8 @@ def subscribe_callback(topic, msg):
             led_blue.value(0)
         else:
             led_blue.value(0)
+
+# sets subscription to a certain topic
 def subscribe(mqtt_client, topic):
     mqtt_client.set_callback(subscribe_callback)
     mqtt_client.subscribe(topic)
@@ -84,9 +87,10 @@ def publish(mqtt_client, topic, value):
     print("[INFO][PUB] Published {} to {} topic".format(value, topic))
 
 subscribe(client, b'jaakko_picow/led')
+
+# loop checking the messages and making the calculations and publishing data to the HiveMQ
 while True:
     client.check_msg()
-    # publish as MQTT payload
     raw_value_soil = moisture.read_u16()
     dry_soil = 65535
     wet_soil = 17000
@@ -114,17 +118,10 @@ while True:
     pressure = bmp.pressure
     pressure_kpa = pressure / 1000
     pressure_kpa_str = f"{pressure_kpa:.3f}"
-    #   led_red.value(1)
-    #    led_state = "ON"
-    #else:
-    #    led_red.value(0)
-    #    led_state = "OFF"
     
-        
     publish(client, 'jaakko_picow/moisture', moisture_str)    
     publish(client, 'jaakko_picow/temp', temp_str)
     publish(client, 'jaakko_picow/pressure', pressure_kpa_str)
-    #publish(client, 'jaakko_picow/led', led_state)
 
     # every 5s
     for i in range (50):
