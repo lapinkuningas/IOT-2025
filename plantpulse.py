@@ -166,5 +166,3 @@ while True:
         
     # just to make sure memory is freed from temporary variables
     gc.collect()
-
-
