@@ -117,7 +117,7 @@ subscribe(client, b'jaakko_picow/led')
 while True:
     client.check_msg()
     
-    # publish as MQTT payload
+    # getting soil moisture values
     raw_value_soil = moisture.read_u16()
     dry_soil = 65535 # calibrated with moisture sensor in the air
     wet_soil = 17000 # calibrated with moisture sensor in glass of water
