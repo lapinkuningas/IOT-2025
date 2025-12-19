@@ -19,7 +19,7 @@ const client = mqtt.connect(
   "mqtts://cf285fe28f4b4589855b6394ae136dfb.s1.eu.hivemq.cloud:8883",
   {
     username: "IOT-Jaakko",
-    password: "Yeah_IOT-25",
+    password: " ######",
   }
 );
 
@@ -92,3 +92,4 @@ client.on("message", async (topic, message) => {
 //     console.log("Saved snapshot:", data);
 //   }
 // }, 2000);
+
