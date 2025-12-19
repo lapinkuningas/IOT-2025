@@ -162,8 +162,8 @@ while True:
     publish(client, 'jaakko_picow/temp', temp_str)
     publish(client, 'jaakko_picow/pressure', pressure_kpa_str)
 
-    # every 120s (= 2 min)
-    for i in range (1200):
+    # every 10s
+    for i in range (100):
         client.check_msg()
         time.sleep_ms(100)
         
