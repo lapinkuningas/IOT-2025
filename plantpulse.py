@@ -11,7 +11,7 @@ import ntptime
 import gc
 
 # some insight for the soil moisture sensing was checked from here: https://www.instructables.com/Soil-Moisture-Sensing-With-the-Maker-Pi-Pico/
-# email alerts for pico w was made with this tutorial: https://www.youtube.com/watch?v=tfp-Futa-lw
+# email alerts for pico w was made with the help of this tutorial: https://www.youtube.com/watch?v=tfp-Futa-lw
 
 # timestamp for evaluation experiments
 def get_finland_timestamp_ms():
